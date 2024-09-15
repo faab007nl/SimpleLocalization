@@ -3,7 +3,7 @@
 A simple ASP.NET package that adds laravel like localization using json files.
 
 ## How to install
-###Install the package
+### Install the package
 ```
 TODO
 ```
