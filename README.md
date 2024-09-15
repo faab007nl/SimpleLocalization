@@ -5,7 +5,7 @@ A simple ASP.NET package that adds laravel like localization using json files.
 ## How to install
 ### Install the package
 ```
-TODO
+dotnet add package Faab007NL.SimpleLocalization
 ```
 
 ### Add the following code to the Program.cs
