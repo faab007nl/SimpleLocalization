@@ -7,7 +7,12 @@ public interface ISimpleLocalization
 {
     
     public LocalizedHtmlString this[string name, string? fallback = null] { get; }
+    public LocalizedHtmlString this[string name, List<Dictionary<string, string>> vars] { get; }
+    public LocalizedHtmlString this[string name, List<Dictionary<string, string>> vars, string? fallback = null] { get; }
+    
     public string GetTranslation(string name, string? fallback = null);
+    public string GetTranslation(string name, List<Dictionary<string, string>> vars);
+    public string GetTranslation(string name, List<Dictionary<string, string>> vars, string? fallback);
 
     public CultureInfo GetDefaultLanguage();
     public void SetDefaultLanguage(CultureInfo culture);
