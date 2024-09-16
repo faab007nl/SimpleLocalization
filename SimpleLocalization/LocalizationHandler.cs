@@ -1,6 +1,4 @@
-using System;
-using System.IO;
-using System.Linq;
+using System.Globalization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Localization;
 
@@ -9,8 +7,18 @@ namespace SimpleLocalization;
 public abstract class LocalizationHandler
 {
     
-    public static LocalizedHtmlString HandleLocalization(string name, string? fallback = null)
+    private static string? _currentLocal;
+
+    public static LocalizedHtmlString HandleLocalizationForView(CultureInfo lang, string name, string? fallback = null)
     {
+        var translatedString = HandleLocalization(lang, name, fallback);
+        return GetLocalizedHtmlString(name, translatedString);
+    }
+
+    public static string HandleLocalization(CultureInfo lang, string name, string? fallback = null)
+    {
+        _currentLocal = lang.TwoLetterISOLanguageName;
+        
         var filePath = GetPathByLocalString(name);
         
         if (File.Exists(filePath))
@@ -18,12 +26,12 @@ public abstract class LocalizationHandler
             var translatedString = GetTranslationString(name, filePath);
             if (translatedString != null)
             {
-                return GetLocalizedHtmlString(name, translatedString);
+                return translatedString;
             }
         }
-        
+
         Console.WriteLine("[Localization] Translation not found: " + name);
-        return GetLocalizedHtmlString(name, fallback ?? name);
+        return fallback ?? name;
     }
 
     private static LocalizedHtmlString GetLocalizedHtmlString(string name, string value)
@@ -33,14 +41,12 @@ public abstract class LocalizationHandler
 
     private static string GetLocalizationFolderPath()
     {
-        const string currentLocal = "en";
-        
         var path = Path.Combine(Directory.GetCurrentDirectory(), "Localization");
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
-        return Path.Combine(path, currentLocal);
+        return Path.Combine(path, _currentLocal);
     }
 
     private static string? GetPathByLocalString(string name)
