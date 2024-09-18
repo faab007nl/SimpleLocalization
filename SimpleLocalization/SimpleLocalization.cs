@@ -9,8 +9,8 @@ public class SimpleLocalization(IHttpContextAccessor httpContextAccessor) : ISim
 {
     
     public LocalizedHtmlString this[string name, string? fallback = null] => LocalizationHandler.HandleLocalizationForView(GetCurrentLanguage(), name, fallback);
-    public LocalizedHtmlString this[string name, List<Dictionary<string, string>> vars] => LocalizationHandler.HandleLocalizationForView(GetCurrentLanguage(), name, vars);
-    public LocalizedHtmlString this[string name, List<Dictionary<string, string>> vars, string? fallback = null] => LocalizationHandler.HandleLocalizationForView(GetCurrentLanguage(), name, vars, fallback);
+    public LocalizedHtmlString this[string name, Dictionary<string, string> vars] => LocalizationHandler.HandleLocalizationForView(GetCurrentLanguage(), name, vars);
+    public LocalizedHtmlString this[string name, Dictionary<string, string> vars, string? fallback = null] => LocalizationHandler.HandleLocalizationForView(GetCurrentLanguage(), name, vars, fallback);
     
     
     public string GetTranslation(string name, string? fallback = null)
@@ -18,12 +18,12 @@ public class SimpleLocalization(IHttpContextAccessor httpContextAccessor) : ISim
         return LocalizationHandler.HandleLocalization(GetCurrentLanguage(), name, [], fallback);
     }
     
-    public string GetTranslation(string name, List<Dictionary<string, string>> vars)
+    public string GetTranslation(string name, Dictionary<string, string> vars)
     {
         return LocalizationHandler.HandleLocalization(GetCurrentLanguage(), name, vars);
     }
     
-    public string GetTranslation(string name, List<Dictionary<string, string>> vars, string? fallback)
+    public string GetTranslation(string name, Dictionary<string, string> vars, string? fallback)
     {
         return LocalizationHandler.HandleLocalization(GetCurrentLanguage(), name, vars, fallback);
     }

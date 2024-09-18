@@ -15,19 +15,19 @@ public abstract class LocalizationHandler
         return GetLocalizedHtmlString(name, translatedString);
     }
     
-    public static LocalizedHtmlString HandleLocalizationForView(CultureInfo lang, string name, List<Dictionary<string, string>> vars)
+    public static LocalizedHtmlString HandleLocalizationForView(CultureInfo lang, string name, Dictionary<string, string> vars)
     {
         var translatedString = HandleLocalization(lang, name, vars);
         return GetLocalizedHtmlString(name, translatedString);
     }
     
-    public static LocalizedHtmlString HandleLocalizationForView(CultureInfo lang, string name, List<Dictionary<string, string>> vars, string? fallback)
+    public static LocalizedHtmlString HandleLocalizationForView(CultureInfo lang, string name, Dictionary<string, string> vars, string? fallback)
     {
         var translatedString = HandleLocalization(lang, name, vars, fallback);
         return GetLocalizedHtmlString(name, translatedString);
     }
 
-    public static string HandleLocalization(CultureInfo lang, string name, List<Dictionary<string, string>> vars, string? fallback = null)
+    public static string HandleLocalization(CultureInfo lang, string name, Dictionary<string, string> vars, string? fallback = null)
     {
         _currentLocal = lang.TwoLetterISOLanguageName;
         
@@ -110,14 +110,11 @@ public abstract class LocalizationHandler
         return currentElement.GetString();
     }
     
-    private static string ReplaceVars(string translatedString, List<Dictionary<string, string>> vars)
+    private static string ReplaceVars(string translatedString, Dictionary<string, string> vars)
     {
-        foreach (var var in vars)
+        foreach (var (key, value) in vars)
         {
-            foreach (var (key, value) in var)
-            {
-                translatedString = translatedString.Replace(":"+key, value);
-            }
+            translatedString = translatedString.Replace(":"+key, value);
         }
         return translatedString;
     }

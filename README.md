@@ -2,6 +2,10 @@
 
 A simple ASP.NET package that adds laravel like localization using json files.
 
+## Issues
+If you have any problems of suggestions please open an issue on [GitHub](https://github.com/faab007nl/SimpleLocalization/issues)
+https://github.com/faab007nl/SimpleLocalization/issues
+
 ## How to install
 ### 1. Install the package
 ```shell
@@ -71,6 +75,24 @@ For example: *home/index.json* -> *home/index*
 A dot (.) is used to separate the keys inside the json file.  
 Writing *home/index.welcome* will get the value of the key welcome in the file *home/index.json*.  
 You can also *home/index.welcome.text* to get sub keys.  
+
+## Using variables in translations
+You can use variables in translations as follows:
+```json
+{
+    "welcome": "Hello :name"
+}
+```
+
+You can then use the following code to replace the variable:
+```csharp
+_service.GetTranslation("home/index.welcome", new Dictionary<string, string> { { "name", "John" } });
+```
+
+Or in a view:
+```html
+<h1 class="display-4">@L["home.welcome", new Dictionary<string, string> { { "name", "John" } }]</h1>
+```
 
 
 ## Service Functions
